@@ -14,7 +14,7 @@ public interface GanwuService {
 //    Observable<MeizhiData> getMeizhiData(
 //            @Path("page") int page);
 
-    @GET("/day/{year}/{month}/{day}")
+    @GET("day/{year}/{month}/{day}")
     Observable<GanWuData> getGanWuData(
             @Path("year") int year,
             @Path("month") int month,
