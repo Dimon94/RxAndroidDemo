@@ -1,7 +1,8 @@
 package com.dimon.rxandroiddemo.network;
 
 import com.dimon.rxandroiddemo.db.HttpResult;
-import com.dimon.rxandroiddemo.db.Subject;
+import com.dimon.rxandroiddemo.util.GanWuDataToItemsMapper;
+import com.socks.library.KLog;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -21,28 +22,29 @@ import rx.schedulers.Schedulers;
  */
 public class HttpMethods {
 
-    public static final String BASE_URL = "https://api.douban.com/v2/movie/";
+    public static final String BASE_URL = "http://gank.io/api/";
 
     private static final int DEFAULT_TIMEOUT = 5;
 
 
     private Retrofit retrofit;
-    private MovieService movieService;
+    private GanwuService ganwuService;
 
     //构造方法私有
     private HttpMethods(){
         //手动创建一个OKHttpClient并设置超时时间
+
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-
+        KLog.a(httpClientBuilder);
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(httpClientBuilder.build())
                 .build();
-
-        movieService = retrofit.create(MovieService.class);
+        KLog.a(retrofit);
+        ganwuService = retrofit.create(GanwuService.class);
     }
 
     //在访问HttpMethods时创建单例
@@ -57,21 +59,21 @@ public class HttpMethods {
 
 
     /**
-     * 用于获取豆瓣电影Top250的数据
+     * 用于获取Gank里新闻消息
      * @param subscriber 由调用者传过来的观察者对象
-     * @param start 起始位置
-     * @param count 获取长度
+     *
      */
-    public void getTopMovie(Subscriber<List<Subject>> subscriber, int start, int count){
+    public void getGanWu(Subscriber<List<Item>> subscriber){
+        KLog.a("到这里");
 //
-//        movieService.getTopMovie(start, count)
+//        ganwuService.getGanWu(start, count)
 //                .map(new HttpResultFunc<List<Subject>>())
 //                .subscribeOn(Schedulers.io())
 //                .unsubscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(subscriber);
-        Observable observable = movieService.getTopMovie(start, count)
-                .map(new HttpResultFunc<List<Subject>>());
+        Observable observable = ganwuService.getGanWuData(2016,03,25)
+                .map(GanWuDataToItemsMapper.getInstance());
 
         toSubscribe(observable, subscriber);
     }
@@ -81,6 +83,7 @@ public class HttpMethods {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s);
+        KLog.a("到这里1");
     }
 
 
@@ -93,10 +96,12 @@ public class HttpMethods {
 
         @Override
         public T call(HttpResult<T> httpResult) {
-            if (httpResult.getCount() != 0) {
+            if (!httpResult.isError()) {
                 throw new ApiException(100);
             }
-            return httpResult.getSubjects();
+            return httpResult.getResults();
         }
     }
+
+
 }

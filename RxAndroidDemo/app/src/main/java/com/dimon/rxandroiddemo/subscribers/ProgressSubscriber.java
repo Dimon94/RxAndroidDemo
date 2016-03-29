@@ -5,12 +5,13 @@ import android.widget.Toast;
 
 import com.dimon.rxandroiddemo.progress.ProgressCancelListener;
 import com.dimon.rxandroiddemo.progress.ProgressDialogHandler;
+import com.socks.library.KLog;
 
 import rx.Subscriber;
 
 /**
  * 用于在Http请求开始时，自动显示一个ProgressDialog
- * 在Http请求结束是，关闭ProgressDialog
+ * 在Http请求结束时，关闭ProgressDialog
  * 调用者自己对请求数据进行处理
  *
  * Created by Dimon on 2016/3/28.
@@ -24,6 +25,7 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
     private Context context;
 
     public ProgressSubscriber(SubscriberOnNextListener mSubscriberOnNextListener, Context context) {
+        KLog.a("到这里pro");
         this.mSubscriberOnNextListener = mSubscriberOnNextListener;
         this.context = context;
         mProgressDialogHandler = new ProgressDialogHandler(context, this, true);
@@ -56,11 +58,13 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
     @Override
     public void onError(Throwable e) {
         dismissProgressDialog();
+        KLog.e(e.getMessage());
         Toast.makeText(context, "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onNext(T t) {
+        KLog.a("onNext");
         mSubscriberOnNextListener.onNext(t);
     }
 

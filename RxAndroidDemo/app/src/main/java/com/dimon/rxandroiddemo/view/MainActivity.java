@@ -6,11 +6,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.dimon.rxandroiddemo.R;
-import com.dimon.rxandroiddemo.db.Subject;
+import com.dimon.rxandroiddemo.network.GanwuService;
 import com.dimon.rxandroiddemo.network.HttpMethods;
-import com.dimon.rxandroiddemo.network.MovieService;
+import com.dimon.rxandroiddemo.network.Item;
 import com.dimon.rxandroiddemo.subscribers.ProgressSubscriber;
 import com.dimon.rxandroiddemo.subscribers.SubscriberOnNextListener;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.result_TV)
     TextView resultTV;
 
-    private MovieService movieService;
+    private GanwuService ganwuService;
     private Subscriber subscriber;
     private SubscriberOnNextListener getTopMovieOnNext;
 
@@ -36,9 +37,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        getTopMovieOnNext = new SubscriberOnNextListener<List<Subject>>() {
+        getTopMovieOnNext = new SubscriberOnNextListener<List<Item>>() {
             @Override
-            public void onNext(List<Subject> subjects) {
+            public void onNext(List<Item> subjects) {
+                KLog.a("onNext里面");
                 resultTV.setText(subjects.toString());
             }
         };
@@ -51,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     //进行网络请求
     private void getMovie() {
-        HttpMethods.getInstance().getTopMovie(
-                new ProgressSubscriber(getTopMovieOnNext, MainActivity.this),
-                0, 10);
+        HttpMethods.getInstance().getGanWu(
+                new ProgressSubscriber(getTopMovieOnNext, MainActivity.this));
     }
 }

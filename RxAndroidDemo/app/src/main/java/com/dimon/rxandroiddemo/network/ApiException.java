@@ -26,7 +26,7 @@ public class ApiException extends RuntimeException {
         String message = "";
         switch (code) {
             case USER_NOT_EXIST:
-                message = "该用户不存在";
+                message = "服务器正在遭受外星人攻击！！！";
                 break;
             case WRONG_PASSWORD:
                 message = "密码错误";

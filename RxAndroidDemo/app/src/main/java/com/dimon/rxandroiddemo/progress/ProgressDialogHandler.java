@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 
+import com.socks.library.KLog;
+
 /**
  * Created by Dimon on 2016/3/28.
  */
@@ -23,6 +25,7 @@ public class ProgressDialogHandler  extends Handler {
     public ProgressDialogHandler(Context context, ProgressCancelListener mProgressCancelListener,
                                  boolean cancelable) {
         super();
+        KLog.a("inProgressDialogHandler");
         this.context = context;
         this.mProgressCancelListener = mProgressCancelListener;
         this.cancelable = cancelable;
@@ -31,7 +34,7 @@ public class ProgressDialogHandler  extends Handler {
     private void initProgressDialog(){
         if (pd == null) {
             pd = new ProgressDialog(context);
-
+            KLog.a("initProgressDialog");
             pd.setCancelable(cancelable);
 
             if (cancelable) {
@@ -51,6 +54,7 @@ public class ProgressDialogHandler  extends Handler {
 
     private void dismissProgressDialog(){
         if (pd != null) {
+            KLog.a("dismissProgressDialog");
             pd.dismiss();
             pd = null;
         }
