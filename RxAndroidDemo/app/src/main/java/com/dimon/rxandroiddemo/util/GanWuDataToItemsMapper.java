@@ -1,7 +1,7 @@
 package com.dimon.rxandroiddemo.util;
 
-import com.dimon.rxandroiddemo.GanWuData;
-import com.dimon.rxandroiddemo.db.News;
+import com.dimon.rxandroiddemo.db.GanWuData;
+import com.dimon.rxandroiddemo.db.entity.News;
 import com.dimon.rxandroiddemo.network.Item;
 import com.socks.library.KLog;
 

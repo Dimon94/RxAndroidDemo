@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private GanwuService ganwuService;
     private Subscriber subscriber;
-    private SubscriberOnNextListener getTopMovieOnNext;
+    private SubscriberOnNextListener getGanWuOnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        getTopMovieOnNext = new SubscriberOnNextListener<List<Item>>() {
+        getGanWuOnNext = new SubscriberOnNextListener<List<Item>>() {
             @Override
             public void onNext(List<Item> subjects) {
                 KLog.a("onNext里面");
@@ -48,12 +48,12 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.click_me_BN)
     public void onClick() {
-        getMovie();
+        getGanWu();
     }
 
     //进行网络请求
-    private void getMovie() {
+    private void getGanWu() {
         HttpMethods.getInstance().getGanWu(
-                new ProgressSubscriber(getTopMovieOnNext, MainActivity.this));
+                new ProgressSubscriber(getGanWuOnNext, MainActivity.this));
     }
 }

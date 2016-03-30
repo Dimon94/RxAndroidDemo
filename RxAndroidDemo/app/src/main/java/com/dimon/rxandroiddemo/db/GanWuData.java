@@ -1,6 +1,6 @@
-package com.dimon.rxandroiddemo;
+package com.dimon.rxandroiddemo.db;
 
-import com.dimon.rxandroiddemo.db.News;
+import com.dimon.rxandroiddemo.db.entity.News;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

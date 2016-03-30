@@ -1,4 +1,4 @@
-package com.dimon.rxandroiddemo.db;
+package com.dimon.rxandroiddemo.db.entity;
 
 import java.util.Date;
 

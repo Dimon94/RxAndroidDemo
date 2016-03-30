@@ -1,5 +1,6 @@
 package com.dimon.rxandroiddemo.db;
 
+import com.dimon.rxandroiddemo.db.entity.News;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
