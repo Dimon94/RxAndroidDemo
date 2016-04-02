@@ -2,6 +2,7 @@ package com.dimon.rxandroiddemo.util;
 
 import com.dimon.rxandroiddemo.db.GanWuData;
 import com.dimon.rxandroiddemo.db.entity.News;
+import com.dimon.rxandroiddemo.network.ApiException;
 import com.dimon.rxandroiddemo.network.Item;
 import com.socks.library.KLog;
 
@@ -14,6 +15,8 @@ import java.util.List;
 import rx.functions.Func1;
 
 /**
+ * 用来统一处理Http的resultCode,并将GanWuData的Data部分剥离出来返回给subscriber
+ *
  * Created by Dimon on 2016/3/29.
  */
 public class GanWuDataToItemsMapper implements Func1<GanWuData, List<Item>> {
@@ -30,6 +33,9 @@ public class GanWuDataToItemsMapper implements Func1<GanWuData, List<Item>> {
     @Override
     public List<Item> call(GanWuData ganWuData) {
         KLog.a("到这里2");
+        if (ganWuData.isError()) {
+            throw new ApiException(100);
+        }
         List<News> ganwus = ganWuData.results.androidList;
         List<Item> items = new ArrayList<>(ganwus.size());
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SS'Z'");

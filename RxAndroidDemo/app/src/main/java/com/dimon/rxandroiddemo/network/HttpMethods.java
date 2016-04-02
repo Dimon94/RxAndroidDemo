@@ -1,6 +1,5 @@
 package com.dimon.rxandroiddemo.network;
 
-import com.dimon.rxandroiddemo.db.HttpResult;
 import com.dimon.rxandroiddemo.util.GanWuDataToItemsMapper;
 import com.socks.library.KLog;
 
@@ -15,7 +14,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -38,14 +36,13 @@ public class HttpMethods {
 
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        KLog.a(httpClientBuilder);
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(httpClientBuilder.build())
                 .build();
-        KLog.a(retrofit);
         ganwuService = retrofit.create(GanwuService.class);
     }
 
@@ -66,23 +63,15 @@ public class HttpMethods {
      *
      */
     public void getGanWu(Subscriber<List<Item>> subscriber){
-        KLog.a(subscription);
+        KLog.a(ganwuService);
         unsubscribe();
-//
-//        ganwuService.getGanWu(start, count)
-//                .map(new HttpResultFunc<List<Subject>>())
-//                .subscribeOn(Schedulers.io())
-//                .unsubscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(subscriber);
         Observable observable = ganwuService.getGanWuData(2016,03,25)
                 .map(GanWuDataToItemsMapper.getInstance());
-
+        KLog.a(observable);
         toSubscribe(observable, subscriber);
     }
     protected void unsubscribe() {
         if (subscription != null && !subscription.isUnsubscribed()) {
-            KLog.a(subscription);
             subscription.unsubscribe();
         }
     }
@@ -91,25 +80,9 @@ public class HttpMethods {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s);
-        KLog.a(subscription);
     }
 
 
-    /**
-     * 用来统一处理Http的resultCode,并将HttpResult的Data部分剥离出来返回给subscriber
-     *
-     * @param <T> Subscriber真正需要的数据类型，也就是Data部分的数据类型
-     */
-    private class HttpResultFunc<T> implements Func1<HttpResult<T>, T> {
-
-        @Override
-        public T call(HttpResult<T> httpResult) {
-            if (!httpResult.isError()) {
-                throw new ApiException(100);
-            }
-            return httpResult.getResults();
-        }
-    }
 
 
 }

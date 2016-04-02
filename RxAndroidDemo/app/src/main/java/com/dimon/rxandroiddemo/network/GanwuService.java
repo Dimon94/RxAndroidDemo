@@ -1,6 +1,6 @@
 package com.dimon.rxandroiddemo.network;
 
-        import com.dimon.rxandroiddemo.db.GanWuData;
+import com.dimon.rxandroiddemo.db.GanWuData;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
