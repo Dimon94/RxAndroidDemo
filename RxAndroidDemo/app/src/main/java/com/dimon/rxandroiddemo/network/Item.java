@@ -8,6 +8,7 @@ public class Item {
     public String description;
     public String url;
     public String who;
+    public String imageurl;
 
     @Override
     public String toString() {
@@ -16,6 +17,7 @@ public class Item {
                 ", description='" + description + '\'' +
                 ", url='" + url + '\'' +
                 ", who='" + who + '\'' +
+                ", imageurl='" + imageurl + '\'' +
                 '}';
     }
 
@@ -49,5 +51,13 @@ public class Item {
 
     public void setWho(String who) {
         this.who = who;
+    }
+
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
     }
 }

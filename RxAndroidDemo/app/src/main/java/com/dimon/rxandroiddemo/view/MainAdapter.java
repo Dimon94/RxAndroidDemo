@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.dimon.rxandroiddemo.R;
 import com.dimon.rxandroiddemo.network.Item;
 
@@ -37,9 +38,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.NewsViewHolder
     @Override
     public void onBindViewHolder(NewsViewHolder personViewHolder, int i) {
 
-        personViewHolder.news_photo.setImageResource(R.drawable.dog);
-        personViewHolder.news_title.setText(newses.get(i).date);
-        personViewHolder.news_desc.setText(newses.get(i).description);
+        Glide.with(mContext)
+                .load(newses.get(i).getImageurl())
+                .placeholder(R.drawable.dog) //设置占位图
+                .crossFade() //设置淡入淡出效果，默认300ms，可以传参.crossFade() //设置淡入淡出效果，默认300ms，可以传参
+                .into(personViewHolder.meizhi);
+        personViewHolder.news_title.setText(newses.get(i).getDescription());
+        personViewHolder.news_desc.setText(newses.get(i).getWho());
     }
 
     @Override
@@ -51,14 +56,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.NewsViewHolder
     static class NewsViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
-        ImageView news_photo;
+        ImageView meizhi;
         TextView news_title;
         TextView news_desc;
 
         public NewsViewHolder(final View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
-            news_photo = (ImageView) itemView.findViewById(R.id.news_photo);
+            meizhi = (ImageView) itemView.findViewById(R.id.news_photo);
             news_title = (TextView) itemView.findViewById(R.id.news_title);
             news_desc = (TextView) itemView.findViewById(R.id.news_desc);
             //设置TextView背景为半透明

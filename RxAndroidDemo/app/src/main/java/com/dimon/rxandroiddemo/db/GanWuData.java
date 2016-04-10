@@ -1,5 +1,6 @@
 package com.dimon.rxandroiddemo.db;
 
+import com.dimon.rxandroiddemo.db.entity.Image;
 import com.dimon.rxandroiddemo.db.entity.News;
 import com.google.gson.annotations.SerializedName;
 
@@ -24,7 +25,7 @@ public class GanWuData {
         public List<News> iOSList;
 
         @SerializedName("福利")
-        public List<News> 妹纸List;
+        public List<Image> 妹纸List;
 
         @SerializedName("拓展资源")
         public List<News> 拓展资源List;
