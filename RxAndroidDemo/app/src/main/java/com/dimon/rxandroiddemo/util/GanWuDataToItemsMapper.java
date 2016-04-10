@@ -44,11 +44,12 @@ public class GanWuDataToItemsMapper implements Func1<GanWuData, List<Item>> {
             Item item = new Item();
             try {
                 Date date = inputFormat.parse(ganwu.createdAt);
-                item.description = outputFormat.format(date);
+                item.date = outputFormat.format(date);
             } catch (ParseException e) {
                 e.printStackTrace();
-                item.description = "unknown date";
+                item.date = "unknown date";
             }
+            item.description = ganwu.desc;
             item.url = ganwu.url;
             item.who = ganwu.who;
             items.add(item);

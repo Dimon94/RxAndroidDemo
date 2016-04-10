@@ -1,5 +1,7 @@
 package com.dimon.rxandroiddemo.db.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 /**
@@ -17,6 +19,8 @@ public class News  {
      * "used": true,
      * "who": "花开堪折枝"
      */
+    @SerializedName("_id")
+    public String id;
     public String type;
     public String desc;
     public String url;
