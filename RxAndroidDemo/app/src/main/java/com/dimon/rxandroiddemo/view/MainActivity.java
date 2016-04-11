@@ -15,7 +15,7 @@ import android.view.View;
 import com.dimon.rxandroiddemo.R;
 import com.dimon.rxandroiddemo.network.GanwuService;
 import com.dimon.rxandroiddemo.network.HttpMethods;
-import com.dimon.rxandroiddemo.network.Item;
+import com.dimon.rxandroiddemo.db.entity.Item;
 import com.dimon.rxandroiddemo.subscribers.ProgressSubscriber;
 import com.dimon.rxandroiddemo.subscribers.SubscriberOnNextListener;
 import com.socks.library.KLog;

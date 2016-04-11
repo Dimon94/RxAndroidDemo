@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.dimon.rxandroiddemo.R;
-import com.dimon.rxandroiddemo.network.Item;
+import com.dimon.rxandroiddemo.db.entity.Item;
 
 import java.util.List;
 

@@ -1,5 +1,8 @@
 package com.dimon.rxandroiddemo.network;
 
+import com.dimon.rxandroiddemo.db.GDate;
+import com.dimon.rxandroiddemo.db.entity.Image;
+import com.dimon.rxandroiddemo.db.entity.Item;
 import com.dimon.rxandroiddemo.util.GanWuDataToItemsMapper;
 import com.socks.library.KLog;
 
@@ -65,10 +68,27 @@ public class HttpMethods {
     public void getGanWu(Subscriber<List<Item>> subscriber){
         KLog.a(ganwuService);
         unsubscribe();
-        Observable observable = ganwuService.getGanWuData(2016,03,25)
+        Observable observable = ganwuService.getGanWuData(2016,04,"08")
                 .map(GanWuDataToItemsMapper.getInstance());
         KLog.a(observable);
         toSubscribe(observable, subscriber);
+    }
+
+    /**
+     * 用于获取Gank里图片
+     * @param subscriber
+     */
+    public void getImage(Subscriber<List<Image>> subscriber){
+        unsubscribe();
+
+    }
+
+    /**
+     * 用于获取Gank里历史日期
+     * @param subscriber
+     */
+    public void getGDate(Subscriber<GDate> subscriber){
+
     }
     protected void unsubscribe() {
         if (subscription != null && !subscription.isUnsubscribed()) {

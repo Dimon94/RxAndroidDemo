@@ -4,7 +4,7 @@ import com.dimon.rxandroiddemo.db.GanWuData;
 import com.dimon.rxandroiddemo.db.entity.Image;
 import com.dimon.rxandroiddemo.db.entity.News;
 import com.dimon.rxandroiddemo.network.ApiException;
-import com.dimon.rxandroiddemo.network.Item;
+import com.dimon.rxandroiddemo.db.entity.Item;
 import com.socks.library.KLog;
 
 import java.text.ParseException;
@@ -49,6 +49,9 @@ public class GanWuDataToItemsMapper implements Func1<GanWuData, List<Item>> {
                 } catch (ParseException e) {
                     e.printStackTrace();
                     item.date = "unknown date";
+            }
+            for (Image meizhi : meizhis){
+                item.imageurl = meizhi.getUrl();
             }
             item.description = ganwu.desc;
             item.url = ganwu.url;

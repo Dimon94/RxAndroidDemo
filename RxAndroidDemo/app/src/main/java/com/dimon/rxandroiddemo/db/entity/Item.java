@@ -1,4 +1,4 @@
-package com.dimon.rxandroiddemo.network;
+package com.dimon.rxandroiddemo.db.entity;
 
 /**
  * Created by Dimon on 2016/3/29.
